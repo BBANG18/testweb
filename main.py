@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+import google.generativeai as genai
 
 # Load environment variables from .env file
 
