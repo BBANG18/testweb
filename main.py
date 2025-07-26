@@ -4,7 +4,6 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 # Load environment variables from .env file
-load_dotenv()
 
 app = FastAPI()
 templates = Jinja2Templates(directory=".")
