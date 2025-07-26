@@ -4,12 +4,15 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from google.generativeai import GenerativeModel, configure
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+# Google API 키 설정 (환경 변수에서 불러옴)
+# Render에 GOOGLE_API라는 환경 변수로 설정하셨으므로, 해당 이름을 사용하도록 변경합니다.
+GOOGLE_API_KEY = os.getenv("GOOGLE_API") # 여기가 GOOGLE_API_KEY -> GOOGLE_API 로 변경되었습니다.
 if not GOOGLE_API_KEY:
-    raise ValueError("GOOGLE_API_KEY 환경 변수가 설정되지 않았습니다.")
+    raise ValueError("GOOGLE_API 환경 변수가 설정되지 않았습니다. Render 환경 변수를 확인하세요.")
 
 configure(api_key=GOOGLE_API_KEY)
 
+# Gemini Flash 모델 초기화
 model = GenerativeModel('gemini-1.5-flash-latest')
 
 app = FastAPI()
@@ -28,6 +31,7 @@ async def chat(request: Request, user_message: str = Form(...)):
     사용자의 메시지를 받아 Gemini 모델에 전달하고 응답을 반환합니다.
     """
     try:
+        # Gemini 모델에 메시지 전달 및 응답 생성
         response = model.generate_content(user_message)
         gemini_response = response.text
     except Exception as e:
